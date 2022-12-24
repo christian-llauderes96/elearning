@@ -395,6 +395,39 @@ Class Master extends DBConnection {
 		}
 	}
 
+	public function save_score(){
+		// extract($_POST);
+		// $data = $dvData;
+		$user_answer = json_decode($_POST['dvData'], true);
+		$exam_id = $_POST['exam_id'];
+		$std_id = $_POST['std_id'];
+		$section = $_POST['section'];
+		$sub_code = $_POST['sub_code'];
+		$faculty = $_POST['faculty'];
+
+		$getAnswer = $this->conn->query("SELECT * FROM tblexams WHERE exam_id=$exam_id");
+		$data = $getAnswer->fetch_assoc();
+		$answer_key = $data['answer_key'];
+		$answer_key = json_decode($answer_key, true);
+		$score=0;
+		$items = sizeof($answer_key);
+		for ($i=0; $i < $items; $i++) { 
+			if($answer_key[$i] == $user_answer[$i]){
+				$score++;
+			}
+		}
+
+		//INSERT SCORE
+		$this->conn->query("INSERT INTO tblscores(exam_id, student_id, section, subject_code, items, score, faculty) VALUES('$exam_id','$std_id','$section','$sub_code','$items','$score','$faculty')");
+
+		$this->settings->set_flashdata('success',"Exam Successfully saved.");
+		return 1;
+		// print_r($user_answer);
+		// print_r($answer_key);
+		// echo $score;
+
+	}
+
 	public function save_lesson(){
 		extract($_POST);
 		$data = "";
@@ -516,6 +549,9 @@ switch ($action) {
 	break;	
 	case 'save_lesson':
 		echo $Master->save_lesson();
+	break;
+	case 'save_score':
+		echo $Master->save_score();
 	break;
 	default:
 		// echo $sysset->index();

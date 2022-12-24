@@ -36,12 +36,21 @@
                 $data = $qry1->fetch_assoc();
               ?>
               <div class="d-flex justify-content-between">
+                <?php
+                  $check_exam = $conn->query("SELECT * FROM tblscores WHERE exam_id='$data[exam_id]' AND student_id='$student_id'");
+                  if($check_exam->num_rows > 0){
+                ?>
+                <button type="button" class="btn btn-primary">Exam Taken</button>
+                <?php
+                }else{
+                ?>
                 <form action="./?page=exam/take-exam" method="POST">
                   <input type="hidden" name="examID" value="<?=$data['exam_id']?>">
                   <button type="submit" class="btn btn-success" name="btn_take_exam">Take Exam</button>
                 </form>
                 <!-- <a href="./?page=exam/take-exam" class="btn btn-success">Take Exam</a> -->
                 <h4><?=$data['items']?> Items</h4>
+                <?php }?>
               </div>
               <?php
                 endif;

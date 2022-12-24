@@ -63,19 +63,25 @@ label.radio input:checked + span {
       <div class="card-body">
         <div id="carouselExams" class="carousel slide" data-interval="false" data-wrap="false">
           <div class="carousel-inner">
-            <form id="exam-form" action="#" >
+            <form id="exam-form" action="#" method="POST">
+              <input id="exam_id" type="hidden" name="exam_id" value="<?=$examData['exam_id']?>">
+              <input id="std_id" type="hidden" name="std_id" value="<?=$student_id?>">
+              <input id="section" type="hidden" name="section" value="<?=$class_id?>">
+              <input id="sub_code" type="hidden" name="sub_code" value="<?=$examData['subject']?>">
+              <input id="faculty" type="hidden" name="faculty" value="<?=$examData['faculty']?>">
               <?php include_once('exam-content.php')?>
               <div class="carousel-item">
                   <div class="question bg-white p-3">
                     <div class="text-center">
               
-                      <div class="alert alert-danger">Some items don't have answers</div>
+                      <div id="msg-error" class="alert alert-danger" style="display: none">Some items don't have answers</div>
                       <a id="goback" class="btn btn-danger" href="#carouselExams" role="button" data-slide="prev">GO BACK</a>
                       <button type="submit" class="btn btn-success">FINISH</button>
                     </div>
                   </div>
               </div>
           </form>
+          <?php //include_once('exam-result.php') ?>
           </div>
         </div>
 
@@ -129,23 +135,70 @@ label.radio input:checked + span {
 
         $("#exam-items").text(counter + "/" + examSize);
       });
+
       $("#goback").click(function(){
+
+        $("#msg-error").css("display","none");
         if(counter != 1)
           counter--;
 
+        $("#exam-items").show();
         $("#exam-items").text(counter + "/" + examSize);
       });
 
       $(document).ready(function() {
         $("#exam-form").on("submit", function(e) {
-          e.preventDefault();
-          if (!$("input[name='ask0']:checked").val()) {
-             alert('Nothing is checked!');
-              return false;
+          
+
+          var notAnswer=0;
+          var validAnswer=0;
+          for (let i = 0; i < examSize; i++) {
+
+            if(answer[i] == undefined){
+              notAnswer++;
+            }
+            else{
+              validAnswer++;
+            }
+
           }
-          else {
-            alert('One of the radio buttons is checked!');
+
+          if(notAnswer > 0){
+            e.preventDefault();
+            $("#msg-error").css("display","block");
           }
+          else{
+            e.preventDefault()
+            start_loader()
+            if($('.err_msg').length > 0)
+              $('.err_msg').remove()
+            $.ajax({
+              url:_base_url_+'classes/Master.php?f=save_score',
+              method: "POST",
+              data: {
+                dvData: JSON.stringify(answer),
+                exam_id: $("#exam_id").val(),
+                std_id: $("#std_id").val(),
+                section: $("#section").val(),
+                sub_code: $("#sub_code").val(),
+                faculty: $("#faculty").val(),
+              },
+                cache: false,
+              error:err=>{
+                console.log(err)
+              },
+              success:function(resp){
+                console.log(resp);
+              if(resp == 1){
+                window.open(_base_url_+"student/?page=exam");
+              }else{
+                alert_toast("An error occured.",'error');
+              }
+                end_loader()
+              }
+            })
+          }
+
         });
 
         $("#goback").click(function() {

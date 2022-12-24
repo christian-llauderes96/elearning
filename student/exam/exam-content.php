@@ -30,22 +30,22 @@
                   </div>
                   <div class="ans ml-2">
                     <label class="radio">
-                      <input type="radio" name="ask<?=$i?>" value="a" class="q1q1" required> <span><?=$choices[$i+1][0]?></span>
+                      <input type="radio" name="ask<?=$i?>" value="a" class="q1q1"> <span><?=$choices[$i+1][0]?></span>
                     </label>    
                   </div>
                   <div class="ans ml-2">
                     <label class="radio"> 
-                      <input type="radio" name="ask<?=$i?>" value="b" class="q1q1" required> <span><?=$choices[$i+1][1]?></span>
+                      <input type="radio" name="ask<?=$i?>" value="b" class="q1q1"> <span><?=$choices[$i+1][1]?></span>
                     </label>    
                   </div>
                   <div class="ans ml-2">
                     <label class="radio"> 
-                      <input type="radio" name="ask<?=$i?>" value="c" class="q1q1" required> <span><?=$choices[$i+1][2]?></span>
+                      <input type="radio" name="ask<?=$i?>" value="c" class="q1q1"> <span><?=$choices[$i+1][2]?></span>
                     </label>    
                   </div>
                   <div class="ans ml-2">
                     <label class="radio">
-                      <input type="radio" name="ask<?=$i?>" value="d" class="q1q1" required> <span><?=$choices[$i+1][3]?></span>
+                      <input type="radio" name="ask<?=$i?>" value="d" class="q1q1"> <span><?=$choices[$i+1][3]?></span>
                     </label>    
                   </div>
                 </div>

@@ -116,15 +116,17 @@ while($row=$qry->fetch_assoc()):
 				$i =1;
 				$academic_year_id= $_settings->userdata('academic_id');
 
-				$qry = $conn->query("SELECT * FROM tblscores WHERE faculty='$fid'");
+				$qry = $conn->query("SELECT *,concat(b.lastname,', ',b.firstname,' ',b.middlename) as names,c.section as st_section 
+					FROM tblscores a 
+					INNER JOIN students b ON a.student_id=b.student_id 
+					INNER JOIN class c ON a.section=c.id WHERE faculty='$faculty_id'");
 				while($row=$qry->fetch_assoc()):
-				?>
-				
+				?>	
 				<tr>
 					<td><?php echo $i++ ?></td>
-					<td><?php echo strtoupper($row['student_name']) ?></td>
-					<td><?php echo $row['section'] ?></td>
-					<td><?php echo $row['subject'] ?></td>
+					<td><?php echo strtoupper($row['names']) ?></td>
+					<td><?php echo $row['st_section'] ?></td>
+					<td><?php echo $row['subject_code'] ?></td>
 					<td><?=date('Y-m-d', strtotime($row['date_applied']))?></td>
 					<td class="text-center">
 						<?php echo $row['items'] ?>

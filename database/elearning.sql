@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2022 at 08:11 AM
+-- Generation Time: Dec 24, 2022 at 11:26 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -416,9 +416,9 @@ CREATE TABLE `tblexams` (
 --
 
 INSERT INTO `tblexams` (`exam_id`, `faculty`, `exam_title`, `subject`, `description`, `items`, `answer_key`, `date_created`) VALUES
-(1, '123456', 'Math Fundamentals', 'DISTRU', '', '5', '', '2022-12-10 18:11:03'),
-(2, '123456', 'COMPUTER PROGRAMMING FINAL QUIZ', 'COMPROG-1', '', '10', '', '2022-12-10 18:27:30'),
-(3, '123456', 'INTRO TO COMPUTING FINAL EXAM IF YOU FAIL U GET IN', 'INTROCOM', '', '12', '', '2022-12-10 18:35:48'),
+(1, '123456', 'Math Fundamentals', 'DISTRU', '', '5', '[\"a\",\"c\",\"b\",\"d\",\"a\"]', '2022-12-10 18:11:03'),
+(2, '123456', 'COMPUTER PROGRAMMING FINAL QUIZ', 'COMPROG-1', '', '10', '[\"c\",\"a\",\"a\",\"b\",\"d\",\"c\",\"c\",\"d\",\"c\",\"d\"]', '2022-12-10 18:27:30'),
+(3, '123456', 'INTRO TO COMPUTING FINAL EXAM IF YOU FAIL U GET IN', 'INTROCOM', '', '12', '[\"c\",\"d\",\"a\",\"a\",\"d\",\"d\",\"c\",\"d\",\"a\",\"c\",\"b\",\"c\"]', '2022-12-10 18:35:48'),
 (10, '143143', 'Math in daily life', 'MODERNMATH', NULL, '5', '[\"d\",\"b\",\"d\",\"c\",\"d\"]', '2022-12-24 12:09:40');
 
 -- --------------------------------------------------------
@@ -430,9 +430,9 @@ INSERT INTO `tblexams` (`exam_id`, `faculty`, `exam_title`, `subject`, `descript
 CREATE TABLE `tblscores` (
   `score_id` int(11) NOT NULL,
   `exam_id` varchar(10) NOT NULL,
-  `student_name` varchar(200) NOT NULL,
+  `student_id` varchar(200) NOT NULL,
   `section` varchar(50) NOT NULL,
-  `subject` varchar(50) NOT NULL,
+  `subject_code` varchar(50) NOT NULL,
   `items` varchar(5) NOT NULL,
   `score` varchar(5) NOT NULL,
   `faculty` varchar(50) NOT NULL,
@@ -443,9 +443,13 @@ CREATE TABLE `tblscores` (
 -- Dumping data for table `tblscores`
 --
 
-INSERT INTO `tblscores` (`score_id`, `exam_id`, `student_name`, `section`, `subject`, `items`, `score`, `faculty`, `date_applied`) VALUES
-(1, '', 'Serafin, Aljun', 'CINS', 'COMPROG1', '50', '20', '5', '2022-12-08 16:38:31'),
-(2, '', 'Ribaya, Renren', 'CINS', 'COMPROG1', '50', '20', '5', '2022-12-08 16:38:31');
+INSERT INTO `tblscores` (`score_id`, `exam_id`, `student_id`, `section`, `subject_code`, `items`, `score`, `faculty`, `date_applied`) VALUES
+(5, '10', '121212', '3', 'MODERNMATH', '5', '3', '143143', '2022-12-24 17:56:08'),
+(6, '10', '121212', '3', 'MODERNMATH', '5', '2', '143143', '2022-12-24 17:57:48'),
+(7, '10', '121212', '3', 'MODERNMATH', '5', '3', '143143', '2022-12-24 17:58:41'),
+(8, '10', '121212', '3', 'MODERNMATH', '5', '3', '143143', '2022-12-24 18:01:27'),
+(9, '10', '121212', '3', 'MODERNMATH', '5', '3', '143143', '2022-12-24 18:02:20'),
+(10, '1', '121212', '3', 'DISTRU', '5', '2', '123456', '2022-12-24 18:04:36');
 
 -- --------------------------------------------------------
 
@@ -629,7 +633,7 @@ ALTER TABLE `tblexams`
 -- AUTO_INCREMENT for table `tblscores`
 --
 ALTER TABLE `tblscores`
-  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `score_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
